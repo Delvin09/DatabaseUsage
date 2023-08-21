@@ -1,27 +1,51 @@
-﻿using Microsoft.Data.SqlClient;
-
-class Customer
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public int Age { get; set; }
-
-    public DateTime CreationDate { get; set; }
-
-    public override string ToString()
-    {
-        return $"{Id}, Name: {Name}, Age: {Age}, Create: {CreationDate}";
-    }
-}
+﻿//using CoolShop.DAL;
+//using CoolShop.DAL.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        //Console.WriteLine("Hello, World!");
+        //AdoNetUsage();
 
-        var customers = new List<Customer>();
+        //var configBuilder = new ConfigurationBuilder();
+        //configBuilder.SetBasePath(Directory.GetCurrentDirectory());
+        //configBuilder.AddJsonFile("appsettings.json");
 
+        //var config = configBuilder.Build();
+
+        //var optBuilder = new DbContextOptionsBuilder<CoolShopContext>();
+        //optBuilder.UseSqlServer(config.GetConnectionString("Default"))
+        //    .LogTo(Console.WriteLine);
+        
+        //using var context = new CoolShopContext(optBuilder.Options);
+
+        ////context.Database.EnsureDeleted();
+        ////context.Database.EnsureCreated();
+
+        //var customers = context.Customers.ToList();
+
+        ////var customer = new Customer
+        ////{
+        ////    Name = "Bob",
+        ////    Address = "1, Hakivska st.",
+        ////    City = "Kiev",
+        ////    Country = "Ukraine",
+        ////    PhoneNumber = "1234567890",
+        ////    PostalCode = "1234567890",
+        ////    Region = "Kievska oblast"
+        ////};
+
+        ////context.Customers.Add(customerFromOtherContext);
+        //context.SaveChanges();
+    }
+
+    private static void AdoNetUsage()
+    {
+        var customers = new List<Customer_Ado>();
         using var connection = new SqlConnection("Data Source=DESKTOP-Q2BKQOF\\SQLEXPRESS;Initial Catalog=Test;Integrated Security=True;TrustServerCertificate=True");
 
         connection.Open();
@@ -31,7 +55,7 @@ internal class Program
         var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            var customer = new Customer();
+            var customer = new Customer_Ado();
             customer.Id = reader.GetInt32(reader.GetOrdinal("ID"));
 
             customer.Name = reader.GetString(reader.GetOrdinal("Name"));
