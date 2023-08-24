@@ -1,13 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CoolShop.DAL.Models
 {
-    public class Customer
+    public class Person { }
+    public class Student : Person
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public virtual List<Curse> Curses { get; set; }
+    }
+
+    public class Curse
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public virtual List<Student> Students { get; set; }
+    }
+
+    public class Company
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public virtual List<Customer> Customers { get; set; }
+    }
+
+    [Table("Customers")]
+    public class Customer : Person
     {
         public int Id { get; set; }
 
@@ -32,5 +59,20 @@ namespace CoolShop.DAL.Models
         public DateTime? BithDate { get; set; }
 
         public int Age { get; set; }
+
+        public int CompanyId { get; set; }
+
+        public virtual Company? Company { get; set; }
+
+        public virtual List<Order> Orders { get; set; }
+    }
+
+    public class Order
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public virtual Customer Customer { get; set; }
     }
 }

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Test.DAL\Test.DAL.csproj" />
+    <ProjectReference Include="..\CoolShop.DAL\CoolShop.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

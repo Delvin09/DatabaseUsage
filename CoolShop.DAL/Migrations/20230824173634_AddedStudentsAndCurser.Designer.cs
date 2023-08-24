@@ -4,6 +4,7 @@ using CoolShop.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,16 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoolShop.DAL.Migrations
 {
     [DbContext(typeof(CoolShopContext))]
-    partial class CoolShopContextModelSnapshot : ModelSnapshot
+    [Migration("20230824173634_AddedStudentsAndCurser")]
+    partial class AddedStudentsAndCurser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.10")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -116,28 +116,6 @@ namespace CoolShop.DAL.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("CoolShop.DAL.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Order");
-                });
-
             modelBuilder.Entity("CoolShop.DAL.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -181,17 +159,6 @@ namespace CoolShop.DAL.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("CoolShop.DAL.Models.Order", b =>
-                {
-                    b.HasOne("CoolShop.DAL.Models.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("CurseStudent", b =>
                 {
                     b.HasOne("CoolShop.DAL.Models.Curse", null)
@@ -210,11 +177,6 @@ namespace CoolShop.DAL.Migrations
             modelBuilder.Entity("CoolShop.DAL.Models.Company", b =>
                 {
                     b.Navigation("Customers");
-                });
-
-            modelBuilder.Entity("CoolShop.DAL.Models.Customer", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
